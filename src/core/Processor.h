@@ -1,0 +1,20 @@
+//
+// Created by sionzee on 14. 12. 2019. Dec.
+//
+
+#ifndef AVP2TOOLS_PROCESSOR_H
+#define AVP2TOOLS_PROCESSOR_H
+
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include "../api/Map.h"
+
+class Processor {
+public:
+    [[nodiscard]] static Map* process(const std::string& path);
+    static void save(const Map& map, const std::string& path);
+};
+
+
+#endif //AVP2TOOLS_PROCESSOR_H
