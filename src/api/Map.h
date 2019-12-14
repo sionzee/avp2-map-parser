@@ -38,10 +38,10 @@ private:
     std::string m_worldInfo;
 
     /** Min position box of Main World */
-    Vector3 m_positionBoxMin;
+    Vector3 m_worldBorderMin;
 
     /** Max position box of Main World */
-    Vector3 m_positionBoxMax;
+    Vector3 m_worldBorderMax;
 
     /** Offset from this world to the source world */
     Vector3 m_worldOffset;

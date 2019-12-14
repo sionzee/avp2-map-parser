@@ -20,5 +20,5 @@ Map::Map(uint mDataVersion, const std::string &mMapName, uint mMapFileSize, cons
          const Vector3 &mPositionBoxMin, const Vector3 &mPositionBoxMax, const Vector3 &mWorldOffset,
          const std::vector<World> &mSubWorlds) : m_dataVersion(mDataVersion), m_mapName(mMapName),
                                                  m_mapFileSize(mMapFileSize), m_worldInfo(mWorldInfo),
-                                                 m_positionBoxMin(mPositionBoxMin), m_positionBoxMax(mPositionBoxMax),
+                                                 m_worldBorderMin(mPositionBoxMin), m_worldBorderMax(mPositionBoxMax),
                                                  m_worldOffset(mWorldOffset), m_subWorlds(mSubWorlds) {}

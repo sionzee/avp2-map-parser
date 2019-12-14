@@ -34,11 +34,15 @@
     file.read(buffer, length);
 
     if (file) std::cout << "all characters read successfully." << std::endl;
-    else std::cout << "error: only " << file.gcount() << " could be read" << std::endl;
+    else {
+        std::cout << "error: only " << file.gcount() << " could be read" << std::endl;
+        file.close();
+        return nullptr;
+    }
+
     file.close();
 
     auto stream = new BinaryStream(length, buffer);
-
     auto packerVersion = stream->read<uint32_t>();
 
     if (packerVersion != 70) {
@@ -68,13 +72,12 @@
     // World custom info
     auto worldCustomInfo = stream->readString(worldCustomInfoLength);
 
-    // Position Box
-    auto positionBoxMin = stream->readVector();
-    auto positionBoxMax = stream->readVector();
+    // World Borders
+    auto worldBorderMin = stream->readVector();
+    auto worldBorderMax = stream->readVector();
 
     // Offset from this world to source world;
     auto worldOffset = stream->readVector();
-
 
     // WorldTree layout;
     auto worldTree = new WorldTree();
@@ -92,7 +95,7 @@
     delete stream;
     delete[] buffer;
 
-    return new Map(packerVersion, std::filesystem::path(path).stem(), length, worldCustomInfo, positionBoxMin, positionBoxMax, worldOffset, std::vector<World>());
+    return new Map(packerVersion, std::filesystem::path(path).stem(), length, worldCustomInfo, worldBorderMin, worldBorderMax, worldOffset, std::vector<World>());
 }
 
 void Processor::save(const Map &map, const std::string &path) {
