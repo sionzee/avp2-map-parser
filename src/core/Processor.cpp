@@ -72,6 +72,9 @@
     // World custom info
     auto worldCustomInfo = stream->readString(worldCustomInfoLength);
 
+    // Have no idea what is this, but value for simple-world is 20
+    stream->read<float>();
+
     // World Borders
     auto worldBorderMin = stream->readVector();
     auto worldBorderMax = stream->readVector();
