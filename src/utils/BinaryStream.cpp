@@ -13,12 +13,15 @@ BinaryStream::BinaryStream(size_t &bufferSize, char *pBuffer) {
 std::string BinaryStream::readString(int length) {
     if(length == 0) return std::string();
     const auto val = std::string(&this->m_pBuffer[this->m_position], &this->m_pBuffer[this->m_position + length]);
-    this->m_position += length * 2;
+    this->m_position += length;
     return val;
 }
 
 Vector3 BinaryStream::readVector() {
-    return Vector3(read<float>(), read<float>(), read<float>());
+    auto x = read<float>();
+    auto y = read<float>();
+    auto z = read<float>();
+    return Vector3(x, y, z);
 }
 
 int BinaryStream::getIndex() {
@@ -35,4 +38,8 @@ void BinaryStream::writeString(std::string &value) {
 
 void BinaryStream::writeVector(Vector3 &vector) {
 
+}
+
+void BinaryStream::readDummy(int length) {
+    this->m_position += length;
 }

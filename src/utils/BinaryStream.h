@@ -24,6 +24,8 @@ public:
     Vector3 readVector();
     void writeVector(Vector3& vector);
 
+    void readDummy(int length);
+
     int getIndex();
     char* getBuffer();
 
