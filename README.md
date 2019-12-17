@@ -1,5 +1,7 @@
-# AVP2 Map .DAT Parser
+ # AVP2 Map .DAT Parser
 Is a tool what can parse .DAT exported by DEdit for **Aliens vs Predator 2**.
+
+### Note: This project is not finished yet. [WIP]
 
 ## Usage
 1. **Download** the [latest release](https://github.com/sionzeecz/avp2-map-parser/releases) or **Clone** the project to your own machine
