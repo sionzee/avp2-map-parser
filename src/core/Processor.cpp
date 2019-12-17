@@ -2,7 +2,7 @@
 #include "../utils/BinaryStream.h"
 #include "../utils/FileMarker.h"
 #include "../api/Map.h"
-#include "../WorldTree.h"
+#include "../types/WorldTree.h"
 
 #include <iostream>
 #include <fstream>

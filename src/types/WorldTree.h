@@ -2,9 +2,9 @@
 #define AVP2MAPREADER_WORLDTREE_H
 #define MAX_WTNODE_CHILDREN		4
 
-#include "utils/BinaryStream.h"
+#include "../utils/BinaryStream.h"
 
-class WorldTree {
+struct WorldTree {
 public:
     void LoadLayout(BinaryStream* stream) {
         const auto boxMin = stream->readVector();
