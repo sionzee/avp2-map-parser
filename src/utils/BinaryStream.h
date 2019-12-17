@@ -14,13 +14,13 @@ private:
 public:
     explicit BinaryStream(size_t& bufferSize, char *pBuffer);
 
-    std::string readString(int length);
+    std::string readString(uint &length);
     void writeString(std::string& value);
 
     Vector3 readVector();
     void writeVector(Vector3& vector);
 
-    void readDummy(int length);
+    void readDummy(uint &length);
 
     int getIndex();
     char* getBuffer();

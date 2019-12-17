@@ -6,7 +6,7 @@ BinaryStream::BinaryStream(size_t &bufferSize, char *pBuffer) {
     this->m_position = 0u;
 }
 
-std::string BinaryStream::readString(int length) {
+std::string BinaryStream::readString(uint &length) {
     if(length == 0) return std::string();
     const auto val = std::string(&this->m_pBuffer[this->m_position], &this->m_pBuffer[this->m_position + length]);
     this->m_position += length;
@@ -36,6 +36,6 @@ void BinaryStream::writeVector(Vector3 &vector) {
 
 }
 
-void BinaryStream::readDummy(int length) {
+void BinaryStream::readDummy(uint &length) {
     this->m_position += length;
 }

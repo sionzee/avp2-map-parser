@@ -635,8 +635,8 @@ namespace Catch {
 
     public: // substrings and searches
         // Returns a substring of [start, start + length).
-        // If start + length > size(), then the substring is [start, size()).
-        // If start > size(), then the substring is empty.
+        // If start + length > fileSize(), then the substring is [start, fileSize()).
+        // If start > fileSize(), then the substring is empty.
         auto substr( size_type start, size_type length ) const noexcept -> StringRef;
 
         // Returns the current start pointer. May not be null-terminated.
@@ -4619,7 +4619,7 @@ public:
         m_positive(m_step > T(0))
     {
         assert(m_current != m_end && "Range start and end cannot be equal");
-        assert(m_step != T(0) && "Step size cannot be zero");
+        assert(m_step != T(0) && "Step fileSize cannot be zero");
         assert(((m_positive && m_current <= m_end) || (!m_positive && m_current >= m_end)) && "Step moves away from end");
     }
 
@@ -5569,7 +5569,7 @@ namespace Catch {
         template <typename Duration2>
         operator BenchmarkStats<Duration2>() const {
             std::vector<Duration2> samples2;
-            samples2.reserve(samples.size());
+            samples2.reserve(samples.fileSize());
             std::transform(samples.begin(), samples.end(), std::back_inserter(samples2), [](Duration d) { return Duration2(d); });
             return {
                 info,
@@ -6985,7 +6985,7 @@ namespace Catch {
                 });
 
                 double accel = sum_cubes / (6 * std::pow(sum_squares, 1.5));
-                int n = static_cast<int>(resample.size());
+                int n = static_cast<int>(resample.fileSize());
                 double prob_n = std::count_if(resample.begin(), resample.end(), [point](double x) { return x < point; }) / (double)n;
                 // degenerate case with uniform samples
                 if (prob_n == 0) return { point, point, point, confidence_level };
@@ -7141,7 +7141,7 @@ namespace Catch {
             template <typename Duration2>
             operator SampleAnalysis<Duration2>() const {
                 std::vector<Duration2> samples2;
-                samples2.reserve(samples.size());
+                samples2.reserve(samples.fileSize());
                 std::transform(samples.begin(), samples.end(), std::back_inserter(samples2), [](Duration d) { return Duration2(d); });
                 return {
                     std::move(samples2),
@@ -7182,7 +7182,7 @@ namespace Catch {
                         };
                     };
                     std::vector<Duration> samples2;
-                    samples2.reserve(samples.size());
+                    samples2.reserve(samples.fileSize());
                     std::transform(samples.begin(), samples.end(), std::back_inserter(samples2), [](double d) { return Duration(d); });
                     return {
                         std::move(samples2),
@@ -10296,7 +10296,7 @@ namespace Catch {
         bool isDebuggerActive(){
             int                 mib[4];
             struct kinfo_proc   info;
-            std::size_t         size;
+            std::size_t         fileSize;
 
             // Initialize the flags so that, if sysctl fails for some bizarre
             // reason, we get a predictable result.
@@ -10313,8 +10313,8 @@ namespace Catch {
 
             // Call sysctl.
 
-            size = sizeof(info);
-            if( sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, nullptr, 0) != 0 ) {
+            fileSize = sizeof(info);
+            if( sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &fileSize, nullptr, 0) != 0 ) {
                 Catch::cerr() << "\n** Call to sysctl failed - unable to determine if debugger is active **\n" << std::endl;
                 return false;
             }
@@ -10680,7 +10680,7 @@ namespace Catch {
         exceptionHandlerHandle = nullptr;
         // Register as first handler in current chain
         exceptionHandlerHandle = AddVectoredExceptionHandler(1, handleVectoredException);
-        // Pass in guarantee size to be filled
+        // Pass in guarantee fileSize to be filled
         SetThreadStackGuarantee(&guaranteeSize);
     }
 

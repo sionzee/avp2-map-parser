@@ -11,6 +11,8 @@
 #include <vector>
 #include <cstdint>
 
+#define AVP2_DAT_VERSION 70
+
 [[nodiscard]] Map* Processor::process(const std::string& path) {
     std::cout << "Opening file \"" << path << "\"" << std::endl;
 
@@ -40,8 +42,8 @@
     auto stream = new BinaryStream(length, buffer);
     auto packerVersion = stream->read<uint32_t>();
 
-    if (packerVersion != 70) {
-        std::cout << "This tool supports only version 70" << std::endl;
+    if (packerVersion != AVP2_DAT_VERSION) {
+        std::cout << "This tool supports only version " << AVP2_DAT_VERSION << std::endl;
         return nullptr;
     }
 
@@ -90,7 +92,15 @@
     delete stream;
     delete[] buffer;
 
-    return new Map(packerVersion, std::filesystem::path(path).stem(), length, worldCustomInfo, worldBorderMin, worldBorderMax, std::vector<World>());
+    return new Map {
+            .dataVersion = packerVersion,
+            .name = std::filesystem::path(path).stem(),
+            .fileSize = uint(length),
+            .worldInfoString = worldCustomInfo,
+            .worldBorderMin = worldBorderMin,
+            .worldBorderMax = worldBorderMax,
+            .subWorlds = std::vector<World>()
+    };
 }
 
 void Processor::save(const Map &map, const std::string &path) {
