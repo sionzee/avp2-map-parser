@@ -37,3 +37,6 @@ cmake-build-release
 
 # Ide files
 .idea
+
+# Non public files for testing (maps from users who not wish to make them public but wants to participate into test)
+test/maps/.hidden
