@@ -8,5 +8,10 @@ TEST_CASE("SimpleWorld test", "[simple-world]") {
     REQUIRE(map->getDATVersion() == 70);
     REQUIRE(map->getWorldInfo() == "INFOSTRINGHERE");
     REQUIRE(map->getMapName() == "simple_world");
+    REQUIRE(map->getWorldBorderMin() == Vector3(-128, -128, -128));
+    REQUIRE(map->getWorldBorderMax() == Vector3(128, 128, 128));
+
+    std::cout << map->toString() << std::endl;
+
     delete map;
 }
