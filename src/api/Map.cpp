@@ -17,8 +17,16 @@ std::string Map::getWorldInfo() const {
 }
 
 Map::Map(uint mDataVersion, const std::string &mMapName, uint mMapFileSize, const std::string &mWorldInfo,
-         const Vector3 &mPositionBoxMin, const Vector3 &mPositionBoxMax, const Vector3 &mWorldOffset,
+         const Vector3 &mPositionBoxMin, const Vector3 &mPositionBoxMax,
          const std::vector<World> &mSubWorlds) : m_dataVersion(mDataVersion), m_mapName(mMapName),
                                                  m_mapFileSize(mMapFileSize), m_worldInfo(mWorldInfo),
                                                  m_worldBorderMin(mPositionBoxMin), m_worldBorderMax(mPositionBoxMax),
-                                                 m_worldOffset(mWorldOffset), m_subWorlds(mSubWorlds) {}
+                                                 m_subWorlds(mSubWorlds) {}
+
+Vector3 Map::getWorldBorderMin() const {
+    return m_worldBorderMin;
+}
+
+Vector3 Map::getWorldBorderMax() const {
+    return m_worldBorderMax;
+}

@@ -13,8 +13,17 @@ public:
     void LoadLayout(BinaryStream* stream) {
         const auto boxMin = stream->readVector();
         const auto boxMax = stream->readVector();
+
+        /** WorldTree nodes */
         const auto nTotalNodes = stream->read<uint32_t>();
-        const auto terrainDepth = stream->read<uint32_t>();
+
+        auto idk = stream->read<uint32_t>(); // 0
+        auto idk2 = stream->read<uint8_t>(); // 67
+        auto idk3 = stream->read<uint8_t>(); // 8
+        auto idk4 = stream->read<uint8_t>(); // 1
+
+        /** WorldTree depth */
+        const auto terrainDepth = stream->read<uint8_t>();
 
         uint8_t curByte = 0;
         uint8_t curBit = 8;

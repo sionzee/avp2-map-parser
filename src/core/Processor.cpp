@@ -72,15 +72,12 @@
     // World custom info
     auto worldCustomInfo = stream->readString(worldCustomInfoLength);
 
-    // Have no idea what is this, but value for simple-world is 20
-    stream->read<float>();
+    // Lightmap Grid Size
+    auto lightGridSize = stream->read<float>();
 
     // World Borders
     auto worldBorderMin = stream->readVector();
     auto worldBorderMax = stream->readVector();
-
-    // Offset from this world to source world;
-    auto worldOffset = stream->readVector();
 
     // WorldTree layout;
     auto worldTree = new WorldTree();
@@ -98,7 +95,7 @@
     delete stream;
     delete[] buffer;
 
-    return new Map(packerVersion, std::filesystem::path(path).stem(), length, worldCustomInfo, worldBorderMin, worldBorderMax, worldOffset, std::vector<World>());
+    return new Map(packerVersion, std::filesystem::path(path).stem(), length, worldCustomInfo, worldBorderMin, worldBorderMax, std::vector<World>());
 }
 
 void Processor::save(const Map &map, const std::string &path) {
