@@ -1,8 +1,4 @@
-//
-// Created by sionzee on 14. 12. 2019. Dec.
-//
-
-#include "Processor.h"
+#include "./Processor.h"
 #include "../utils/BinaryStream.h"
 #include "../utils/FileMarker.h"
 #include "../api/Map.h"
@@ -14,7 +10,6 @@
 #include <filesystem>
 #include <vector>
 #include <cstdint>
-
 
 [[nodiscard]] Map* Processor::process(const std::string& path) {
     std::cout << "Opening file \"" << path << "\"" << std::endl;

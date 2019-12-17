@@ -1,7 +1,3 @@
-//
-// Created by sionzee on 11. 12. 2019. Dec.
-//
-
 #include "./BinaryStream.h"
 
 BinaryStream::BinaryStream(size_t &bufferSize, char *pBuffer) {

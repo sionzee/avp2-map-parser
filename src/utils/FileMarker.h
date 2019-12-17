@@ -1,7 +1,3 @@
-//
-// Created by sionzee on 11. 12. 2019. Dec.
-//
-
 #ifndef AVP2MAPREADER_FILEMARKER_H
 #define AVP2MAPREADER_FILEMARKER_H
 

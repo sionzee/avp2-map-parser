@@ -1,9 +1,6 @@
-//
-// Created by sionzee on 11. 12. 2019. Dec.
-//
-
 #ifndef AVP2MAPREADER_VECTOR_H
 #define AVP2MAPREADER_VECTOR_H
+
 #include <sstream>
 
 struct Vector3 {

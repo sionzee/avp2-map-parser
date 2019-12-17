@@ -1,14 +1,11 @@
-//
-// Created by sionzee on 14. 12. 2019. Dec.
-//
-
 #ifndef AVP2TOOLS_PROCESSOR_H
 #define AVP2TOOLS_PROCESSOR_H
+
+#include "../api/Map.h"
 
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include "../api/Map.h"
 
 class Processor {
 public:

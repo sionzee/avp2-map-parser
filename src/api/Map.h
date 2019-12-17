@@ -1,15 +1,11 @@
-//
-// Created by sionzee on 12. 12. 2019. Dec.
-//
-
 #ifndef AVP2MAPREADER_MAP_H
 #define AVP2MAPREADER_MAP_H
 
+#include "../types/Vector.h"
+#include "./WorldFlags.h"
 
 #include <string>
 #include <vector>
-#include "../types/Vector.h"
-#include "WorldFlags.h"
 
 
 /** Information from BSP */
@@ -20,7 +16,6 @@ private:
 
     /** Name of the world */
     std::string m_worldName;
-
 };
 
 struct Map {
