@@ -2,50 +2,60 @@
 #define AVP2MAPREADER_WORLDTREE_H
 #define MAX_WTNODE_CHILDREN		4
 
+#include <optional>
 #include "../utils/BinaryStream.h"
 
-struct WorldTree {
+struct WorldTreeNode {
 public:
-    void LoadLayout(BinaryStream* stream) {
-        const auto boxMin = stream->readVector();
-        const auto boxMax = stream->readVector();
+    Vector3 borderBoxMin;
+    Vector3 borderBoxMax;
 
-        /** WorldTree nodes */
-        const auto nTotalNodes = stream->read<uint32_t>();
+    WorldTreeNode *m_Children[2][2];
+    WorldTreeNode *m_ChildrenA[MAX_WTNODE_CHILDREN];
+    WorldTreeNode *m_pParent;
 
-        auto idk = stream->read<uint32_t>(); // 0
-        auto idk2 = stream->read<uint8_t>(); // 67
-        auto idk3 = stream->read<uint8_t>(); // 8
-        auto idk4 = stream->read<uint8_t>(); // 1
-
-        /** WorldTree depth */
-        const auto terrainDepth = stream->read<uint8_t>();
-
-        uint8_t curByte = 0;
-        uint8_t curBit = 8;
-        // Save a bit for each node telling if it's subdivided.
-        WorldTree::LoadLayout(stream, curByte, curBit);
-
+    void setBorderBox(Vector3 &min, Vector3 &max) {
+        borderBoxMin = min;
+        borderBoxMax = max;
     }
 
-    bool LoadLayout(BinaryStream* stream, uint8_t &curByte, uint8_t &curBit) {
+    bool Subdivide() {
+        uint32_t i;
+
+        // Allocate..
+        for(i=0; i < MAX_WTNODE_CHILDREN; i++)
+        {
+            m_ChildrenA[i] = new WorldTreeNode;
+            if(!m_ChildrenA[i])
+            {
+                return false;
+            }
+
+            m_ChildrenA[i]->m_pParent = this;
+        }
+
+        return true;
+    }
+
+    bool loadLayout(BinaryStream* stream, uint8_t &curByte, uint8_t &curBit) {
         bool bSubdivide;
         uint32_t i;
 
-        // Read the next bit.
+        /** Read the next bit */
         if(curBit == 8) {
             curByte = stream->read<uint8_t>();
             curBit = 0;
         }
 
-        bSubdivide = !!(curByte & (1<<curBit));
+        bSubdivide = (curByte & (1u << curBit)) != 0;
         curBit++;
 
         if(bSubdivide) {
-            if(!WorldTree::Subdivide()) return false;
+            if(!Subdivide()) return false;
 
-            for(i = 0; i < MAX_WTNODE_CHILDREN; i++) {
-                if(!m_ChildrenA[i]->LoadLayout(stream, curByte, curBit))
+            for(i=0; i < MAX_WTNODE_CHILDREN; i++)
+            {
+                if(!m_ChildrenA[i]->loadLayout(stream, curByte, curBit))
                 {
                     return false;
                 }
@@ -54,22 +64,32 @@ public:
 
         return true;
     }
+};
 
-private:
+struct WorldTree {
+public:
+    std::optional<WorldTreeNode> rootNode;
 
-    WorldTree	*m_ChildrenA[MAX_WTNODE_CHILDREN];
+    void loadLayout(BinaryStream* stream) {
+        rootNode = WorldTreeNode();
 
-    bool Subdivide() {
-        uint32_t i;
+        auto borderBoxMin = stream->readVector();
+        auto borderBoxMax = stream->readVector();
+        rootNode->setBorderBox(borderBoxMin, borderBoxMax);
 
-        // Allocate..
-        for(i=0; i < MAX_WTNODE_CHILDREN; i++)
-        {
-            m_ChildrenA[i] = new WorldTree;
-        }
+        /** WorldTree nodes */
+        const auto nTotalNodes = stream->read<uint32_t>();
 
-        return true;
+        /** On all tested maps it is 0 0 0 0 */
+        const auto idk = stream->read<uint32_t>();
+
+        /** Right now comes in bites shifting */
+        uint8_t curByte = 0;
+        uint8_t curBit = 8;
+        rootNode.value().loadLayout(stream, curByte, curBit);
     }
+
+    WorldTree() = default;
 };
 
 #endif //AVP2MAPREADER_WORLDTREE_H

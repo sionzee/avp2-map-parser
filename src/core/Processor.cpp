@@ -77,17 +77,17 @@
     auto worldBorderMax = stream->readVector();
 
     // WorldTree layout;
-    auto worldTree = new WorldTree();
-    worldTree->LoadLayout(stream);
+    WorldTree worldTree;
+    worldTree.loadLayout(stream);
 
     // Sub-Worlds
-    auto totalSubWorlds = stream->read<uint32_t>();
-
-    for(i = 0; i < totalSubWorlds; i++) {
-        //dummy 4 bytes
-        stream->read<uint32_t>();
-
-    }
+    auto totalSubWorlds = stream->read<uint8_t>();
+//
+//    for(i = 0; i < totalSubWorlds; i++) {
+//        //dummy 4 bytes
+//        stream->read<uint32_t>();
+//
+//    }
 
     delete stream;
     delete[] buffer;
