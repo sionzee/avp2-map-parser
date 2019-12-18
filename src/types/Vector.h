@@ -9,6 +9,7 @@ struct Vector3 {
     float z;
 
     Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
+    Vector3(): x(0), y(0), z(0) {};
 
     friend std::ostream& operator<<(std::ostream& cout, const Vector3& vec) {
         std::ostringstream ss;
