@@ -63,12 +63,12 @@
     stream->read<uint32_t>();
 
     // World Info Length
-    auto worldCustomInfoLength = stream->read<uint32_t>();
+    uint worldCustomInfoLength = stream->read<uint32_t>();
 
     // World custom info
     auto worldCustomInfo = stream->readString(worldCustomInfoLength);
 
-    // Lightmap Grid Size
+    // LMGridSize
     auto lightGridSize = stream->read<float>();
 
     // World Borders
@@ -79,14 +79,27 @@
     WorldTree worldTree;
     worldTree.loadLayout(stream);
 
-    // Sub-Worlds
-    auto totalSubWorlds = stream->read<uint8_t>();
-//
-//    for(i = 0; i < totalSubWorlds; i++) {
-//        //dummy 4 bytes
-//        stream->read<uint32_t>();
-//
-//    }
+    // Testing Maps: Alesser / Simple_World
+
+    // 35 / 2 -- probably world-model count?
+    auto idkNumber = stream->read<uint32_t>();
+
+    auto idkNumber2 = stream->read<uint32_t>();
+
+
+    //
+
+    // Tested multiple maps, there is 32 empty bytes
+    stream->readDummy(32);
+
+
+    auto idkNumber3 = stream->read<uint32_t>(); // 20
+    auto treeDepth = stream->read<uint32_t>();
+
+    // PhysicsBSP
+    uint physicsBspLength = stream->read<uint16_t>();
+    auto physicsBspString = stream->readString(physicsBspLength);
+
 
     delete stream;
     delete[] buffer;
