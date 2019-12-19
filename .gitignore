@@ -40,3 +40,10 @@ cmake-build-release
 
 # Non public files for testing (maps from users who not wish to make them public but wants to participate into test)
 test/maps/Worlds/.hidden
+
+# AVP2 Files
+test/maps/Attributes
+test/maps/cres.DLL
+test/maps/cshell.DLL
+test/maps/object.LTO
+test/maps/sres.DLL
