@@ -2,6 +2,7 @@
 #include "../utils/BinaryStream.h"
 #include "../api/Map.h"
 #include "../types/WorldTree.h"
+#include "../types/WorldBsp.h"
 
 #include <iostream>
 #include <fstream>
@@ -79,26 +80,24 @@
     WorldTree worldTree;
     worldTree.loadLayout(stream);
 
-    // Testing Maps: Alesser / Simple_World
+    auto worldModelCount = stream->read<uint32_t>();
+    std::vector<World> worldModels;
+    worldModels.reserve(worldModelCount);
 
-    // 35 / 2 -- probably world-model count?
-    auto idkNumber = stream->read<uint32_t>();
+    for(i = 0; i < worldModelCount; i++) {
 
-    auto idkNumber2 = stream->read<uint32_t>();
+        World worldModel = {};
 
+        auto idkPosition = stream->read<uint32_t>();
 
-    //
+//        // Separating data
+        stream->readDummy(32);
 
-    // Tested multiple maps, there is 32 empty bytes
-    stream->readDummy(32);
+        WorldBsp worldBsp = {};
+        worldBsp.Load(stream);
 
-
-    auto idkNumber3 = stream->read<uint32_t>(); // 20
-    auto treeDepth = stream->read<uint32_t>();
-
-    // PhysicsBSP
-    uint physicsBspLength = stream->read<uint16_t>();
-    auto physicsBspString = stream->readString(physicsBspLength);
+        worldModels.push_back(worldModel);
+    }
 
 
     delete stream;
@@ -111,7 +110,7 @@
             .worldInfoString = worldCustomInfo,
             .worldBorderMin = worldBorderMin,
             .worldBorderMax = worldBorderMax,
-            .subWorlds = std::vector<World>()
+            .subWorlds = worldModels
     };
 }
 
