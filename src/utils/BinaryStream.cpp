@@ -36,6 +36,6 @@ void BinaryStream::writeVector(Vector3 &vector) {
 
 }
 
-void BinaryStream::readDummy(uint &length) {
+void BinaryStream::readDummy(int length) {
     this->m_position += length;
 }
