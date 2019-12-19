@@ -1,6 +1,5 @@
 #include "./Processor.h"
 #include "../utils/BinaryStream.h"
-#include "../utils/FileMarker.h"
 #include "../api/Map.h"
 #include "../types/WorldTree.h"
 
@@ -50,12 +49,12 @@
     int i;
 
     // Markers
-    CFileMarker objectListMarker(stream);
-    CFileMarker blindDataMarker(stream);
-    CFileMarker lightGridMarker(stream);
-    CFileMarker physicsDataMarker(stream);
-    CFileMarker particleDataMarker(stream);
-    CFileMarker renderDataMarker(stream);
+    auto objectListMarker = stream->read<uint32_t>();
+    auto blindDataMarker = stream->read<uint32_t>();
+    auto lightGridMarker = stream->read<uint32_t>();
+    auto physicsDataMarker = stream->read<uint32_t>();
+    auto particleDataMarker = stream->read<uint32_t>();
+    auto renderDataMarker = stream->read<uint32_t>();
 
     // Dummy
     stream->read<uint32_t>();
