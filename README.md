@@ -9,6 +9,15 @@ Is a tool what can parse .DAT exported by DEdit for **Aliens vs Predator 2**.
 3. **Call** *Processor::process(path_to_dat_file)* (returns pointer to Map struct) 
 4. **Visit** *src/api/Map.h* and check for API calls :)
 
+## Tests
+
+To open tests map in DEdit you have to:
+1. **UNREZ** AVP2 *unrez.bat is available from tool kit*
+2. **Copy** cres.DLL, cshell.DLL, object.LTO and sres.DLL files to test/maps
+3. **Copy** Attributes/ directory to test/maps
+4. **Run** DEdit and you should be able to open **maps.dep**
+
+
 ## Issues
 Feel free to submit issues and enhancement requests.
 
