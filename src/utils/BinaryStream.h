@@ -4,6 +4,7 @@
 
 #include <string>
 #include <cstdint>
+#include <vector>
 #include "../types/Vector.h"
 
 class BinaryStream {
@@ -55,6 +56,8 @@ public:
         this->m_position += sizeof(T);
         return val;
     }
+
+    std::vector<std::string> readStringArray(uint32_t &length, uint32_t &amount);
 };
 
 

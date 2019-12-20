@@ -39,3 +39,21 @@ void BinaryStream::writeVector(Vector3 &vector) {
 void BinaryStream::readDummy(int length) {
     this->m_position += length;
 }
+
+std::vector<std::string> BinaryStream::readStringArray(uint32_t &length, uint32_t &amount) {
+    std::vector<std::string> list;
+    list.reserve(length);
+
+    std::string temp;
+    for(int i = m_position; i < m_position + length; i++) {
+        auto letter = m_pBuffer[i];
+        if(letter == 0) {
+            list.emplace_back(temp);
+            temp = "";
+            continue;
+        }
+        temp += letter;
+    }
+    m_position += length;
+    return list;
+}
